@@ -6,6 +6,7 @@ using MyBlog.Models;
 using MyBlog.WebApi.Routes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MyBlog.WebApi.Controllers
@@ -61,10 +62,14 @@ namespace MyBlog.WebApi.Controllers
             nameof(Post.Title),
             nameof(Post.SubTitle),
             nameof(Post.Content),
-            nameof(Post.Visible),
-            nameof(Post.CreatedBy)
+            nameof(Post.Visible)
             )] Post post)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                post.CreatedBy = User.FindFirst(ClaimTypes.Email)?.Value ?? "unknown";
+            }
+
             Post newPost = await _repository.AddPostAsync(post);
             return CreatedAtAction(nameof(GetPost), new { id = newPost.PostId }, newPost);
         }

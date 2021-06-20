@@ -57,8 +57,9 @@ namespace MyBlog.Models
         [Display(Name = "Visible")]
         public bool Visible { get; set; }
 
-        [Required]
-        [StringLength(128)]
+        /// <summary>
+        /// Original auther of the post
+        /// </summary>
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
 
