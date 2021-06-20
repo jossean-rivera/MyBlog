@@ -17,7 +17,9 @@ export default function Layout({ children }) {
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">My Blog</Navbar.Brand>
+                    <Navbar.Brand href="/">
+                        My Blog
+                    </Navbar.Brand>
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         {isAuthenticated ?
