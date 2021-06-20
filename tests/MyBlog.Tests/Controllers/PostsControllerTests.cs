@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MyBlog.Data;
@@ -6,6 +7,8 @@ using MyBlog.Models;
 using MyBlog.WebApi.Controllers;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace MyBlog.Tests.Controllers
@@ -101,7 +104,17 @@ namespace MyBlog.Tests.Controllers
                 .ReturnsAsync(post)
                 .Verifiable();
 
-            PostsController controller = new(_repositoryMock.Object);
+            PostsController controller = new(_repositoryMock.Object)
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = new DefaultHttpContext
+                    {
+                        User = new ClaimsPrincipal(new Mock<IIdentity>().Object) 
+                    }
+                }
+            };
+            
 
             //  Act
             ActionResult<Post> result = await controller.AddPost(post);
