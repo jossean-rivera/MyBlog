@@ -27,8 +27,7 @@ namespace MyBlog.WebApi.Controllers
         /// </summary>
         /// <returns>Task that yields enumeration of <see cref="Post"/> objects</returns>
         [HttpGet]
-        [Authorize]
-        [RequiredScope("Default.Read")]
+        [ResponseCache(Duration = 3600)]
         public async Task<IEnumerable<Post>> GetPosts() => await _repository.GetPostsAsync();
 
         /// <summary>
@@ -37,6 +36,7 @@ namespace MyBlog.WebApi.Controllers
         /// <param name="id">Identifier of post</param>
         /// <returns>Task that yields single instance of <see cref="Post"/></returns>
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 3600)]
         public async Task<ActionResult<Post>> GetPost([Required, FromRoute] int id)
         {
             Post post = await _repository.GetPostAsync(id);
