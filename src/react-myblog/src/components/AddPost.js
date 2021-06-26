@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useAuthFetch } from '../hooks/useAuthFetch'
@@ -48,9 +49,14 @@ export default function AddPost() {
                     style={{ height: '100px' }}
                 />
             </Form.Group>
-            <Button className="mt-3" variant="primary" type="submit">
-                Submit
-            </Button>
+            <Form.Group className="mt-3">
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+                <Link to="/" className="mx-3">
+                    <Button variant="secondary">Cancel</Button>
+                </Link>
+            </Form.Group>
         </Form>
 
     )

@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using MyBlog.Data;
+using MyBlog.WebApi.Filters;
 
 namespace MyBlog.WebApi
 {
@@ -39,7 +40,11 @@ namespace MyBlog.WebApi
                 options.ReportApiVersions = true;
             });
 
-            services.AddControllers();
+            //  Add API controllers and options
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<HttpResponseExceptionFilter>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

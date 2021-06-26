@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect, useParams } from 'react-router'
-import { useAuthFetch } from '../hooks/useAuthFetch'
 import { getPostsUrl } from '../apiConfig'
+import { useAuthFetch } from '../hooks/useAuthFetch'
 import Spinner from 'react-bootstrap/Spinner'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 
-/** Controlled component with form to edit existing post */
-export default function EditPost() {
+export default function DeletePost() {
     const { postId } = useParams()
     const [loading, setLoading] = useState(false)
     const [redirect, setRedirect] = useState(false)
@@ -45,30 +44,23 @@ export default function EditPost() {
 
     //  If component submitted the form successfully, then redirect user
     if (redirect) {
-        return <Redirect to={`/posts/${postId}`} />
+        return <Redirect to="/" />
     }
 
-    //  Submit handler that sends request to update existing post
+    //  Submit handler that sends request to delete an existing post
     async function submitHandler(e) {
         e.preventDefault()
         setLoading(true)
 
         try {
-            const url = getPostsUrl()
-            await fetchAction('PUT', url, post)
+            const url = getPostsUrl(postId)
+            await fetchAction('DELETE', url, post)
             setRedirect(true)
         } catch (err) {
-            setErrorMessage(err.message || 'Something went wrong. Please try again.')
+            setErrorMessage(err.message || 'Seeafshd')
         } finally {
             setLoading(false)
         }
-    }
-
-
-    //  input onChange handler that updates the state of the componet
-    function inputChangeHandler(e) {
-        e.preventDefault()
-        setPost({ ...post, [e.target.name]: e.target.value })
     }
 
     return (
@@ -81,34 +73,18 @@ export default function EditPost() {
             }
 
             <Form onSubmit={submitHandler}>
-                <Form.Group>
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                        name="title"
-                        value={post.title}
-                        onChange={inputChangeHandler} >
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Sub Title</Form.Label>
-                    <Form.Control
-                        name="subTitle"
-                        value={post.subTitle}
-                        onChange={inputChangeHandler} >
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Content</Form.Label>
-                    <Form.Control
-                        name="content"
-                        as="textarea"
-                        value={post.content}
-                        onChange={inputChangeHandler} >
-                    </Form.Control>
-                </Form.Group>
 
-                <Button className="mt-3" variant="primary" type="submit">
-                    Submit
+                <Alert variant="warning">
+                    <Alert.Heading>Are you sure you want to remove this post?</Alert.Heading>
+                    <p>This action cannot be reversed.</p>
+                </Alert>
+
+                <h1>{post.title}</h1>
+                <h5><i>{post.subTitle}</i></h5>
+                <p>{post.content}</p>
+
+                <Button className="mt-3 text-white" variant="danger" type="submit">
+                    Delete
                 </Button>
             </Form>
         </>

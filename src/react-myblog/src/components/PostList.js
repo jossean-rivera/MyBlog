@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthenticatedTemplate } from "@azure/msal-react"
 import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
 import Toast from 'react-bootstrap/Toast'
@@ -50,6 +51,12 @@ export default function PostList() {
                 {loading && <Spinner style={{ marginRight: '5px' }} animation="border" role="status" size="sm" />}
                 Load Posts
             </Button>
+
+            <AuthenticatedTemplate>
+                <Link to="/posts/new" className="mx-3">
+                    <Button variant="primary">New Post</Button>
+                </Link>
+            </AuthenticatedTemplate>
         </>
     )
 }

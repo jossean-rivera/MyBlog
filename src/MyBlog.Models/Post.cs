@@ -22,21 +22,21 @@ namespace MyBlog.Models
         [Required]
         [StringLength(400)]
         [Display(Name = "Title")]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// Sub title to the post
         /// </summary>
         [StringLength(400)]
         [Display(Name = "Sub Title")]
-        public string SubTitle { get; set; }
+        public string? SubTitle { get; set; }
 
         /// <summary>
         /// Content of the post
         /// </summary>
         [Required]
         [Display(Name = "Content")]
-        public string Content { get; set; }
+        public string? Content { get; set; }
 
         /// <summary>
         /// Create date and time of the post
@@ -61,7 +61,7 @@ namespace MyBlog.Models
         /// Original auther of the post
         /// </summary>
         [Display(Name = "Created By")]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         /// <summary>
         /// Serializes post object as a JSON in a string

@@ -28,5 +28,19 @@ namespace MyBlog.Data
         /// <param name="post">New post to add</param>
         /// <returns>Task that yields the added post</returns>
         Task<Post> AddPostAsync(Post post);
+
+        /// <summary>
+        /// Updates existing post in repository
+        /// </summary>
+        /// <param name="post">Post to update</param>
+        /// <returns>Updated post</returns>
+        Task<Post> UpdatePostAsync(Post post);
+
+        /// <summary>
+        /// Deletes a post at the repository
+        /// </summary>
+        /// <param name="id">Identifier of the post to remve</param>
+        /// <returns>Removed post object</returns>
+        Task<Post> DeletePostAsync(int id);
     }
 }

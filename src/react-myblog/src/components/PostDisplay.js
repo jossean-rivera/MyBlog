@@ -36,6 +36,9 @@ export default function PostDisplay() {
                 <Link to={`/posts/${post.postId}/edit`}>
                     <Button variant="primary" size="sm">Edit</Button>
                 </Link>
+                <Link to={`/posts/${post.postId}/delete`}>
+                    <Button className="mx-3 text-white" variant="danger" size="sm">Delete</Button>
+                </Link>
             </AuthenticatedTemplate>
         </div>
     )

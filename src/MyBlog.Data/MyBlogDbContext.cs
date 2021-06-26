@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyBlog.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace MyBlog.Data
 {
@@ -13,7 +11,7 @@ namespace MyBlog.Data
         /// <summary>
         /// Table of <see cref="Post"/> objects
         /// </summary>
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Post>? Posts { get; set; }
 
         /// <summary>
         /// Initializes context with options

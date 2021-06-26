@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <StartupObject>MyBlog.WebApi.Program</StartupObject>
     <UserSecretsId>73e23fec-1a8e-41a3-8c14-b464d6627415</UserSecretsId>
   </PropertyGroup>

@@ -16,7 +16,7 @@ namespace MyBlog.WebApi.Routes
         /// Initializes <see cref="Template"/> to start with "api"
         /// </summary>
         /// <param name="template">Ending part of the template</param>
-        public ApiRoute(string template = "api/[controller]")
+        public ApiRoute(string template = "[controller]")
         {
             if (template is null)
             {
