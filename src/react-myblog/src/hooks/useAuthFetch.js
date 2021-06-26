@@ -49,6 +49,12 @@ export const useAuthFetch = () => {
     const fetchAction = async (method, url, body) => {
 
         const response = await wrapRequestWithToken(method, url, body)
+
+        if (!response.ok) {
+            const text = await response.text()
+            throw new Error(text || 'Network response was not ok')
+        }
+
         const data = await response?.json() || []
         return data
     };
