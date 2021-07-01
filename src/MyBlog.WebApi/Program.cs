@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyBlog.Data;
 using MyBlog.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyBlog.WebApi
@@ -23,12 +22,14 @@ namespace MyBlog.WebApi
             {
                 // Get the instance of repository
                 IServiceProvider services = scope.ServiceProvider;
-                IPostRepository repository = services.GetRequiredService<IPostRepository>();
+                MyBlogDbContext context = services.GetRequiredService<MyBlogDbContext>();
 
                 try
                 {
+                    _ = await context.Database.EnsureCreatedAsync();
+
                     // Seed repository
-                    await SeedRepositoryAsync(repository);
+                    await SeedRepositoryAsync(context);
                 }
                 catch
                 {
@@ -48,13 +49,11 @@ namespace MyBlog.WebApi
                 });
 
         //  Seeds repository
-        private static async Task SeedRepositoryAsync(IPostRepository repository)
+        private static async Task SeedRepositoryAsync(MyBlogDbContext context)
         {
-            IEnumerable<Post> posts = await repository.GetPostsAsync();
-
-            if (!posts.Any())
+            if (!await context.Posts.AnyAsync())
             {
-                await repository.AddPostAsync(new Post
+                context.Posts!.Add(new Post
                 {
                     Title = "Hello, World in C#",
                     SubTitle = "Start coding now in C#",
@@ -63,7 +62,7 @@ namespace MyBlog.WebApi
                     CreatedBy = "jossean.rivera@outlook.com"
                 });
 
-                await repository.AddPostAsync(new Post
+                context.Posts!.Add(new Post
                 {
                     Title = "Object-Oriented Programming with C++",
                     SubTitle = "Learn OOP",
@@ -73,7 +72,10 @@ namespace MyBlog.WebApi
                     ModifyDate = DateTime.Now,
                     CreatedBy = "jossean.rivera@outlook.com"
                 });
+
+                await context.SaveChangesAsync();
             }
         }
+
     }
 }
