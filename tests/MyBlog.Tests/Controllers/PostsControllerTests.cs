@@ -137,5 +137,58 @@ namespace MyBlog.Tests.Controllers
             Assert.AreEqual(createdResult.Value, post, $"{nameof(PostsController.AddPost)} did not returned a created at action result with the added post");
             _repositoryMock.Verify();
         }
+
+        [TestMethod]
+        public async Task UpdatePost_Success()
+        {
+            //  Arrange
+            Post post = new Post
+            {
+                PostId = 1,
+                Title = "Hello, World!",
+            };
+
+            _repositoryMock.Setup(repo => repo.UpdatePostAsync(post))
+                .ReturnsAsync(post)
+                .Verifiable();
+
+            PostsController controller = new(_repositoryMock.Object);
+
+            //  Act
+            ActionResult<Post> result = await controller.UpdatePost(post);
+
+            //  Assert
+            Assert.IsNotNull(result, $"{nameof(PostsController.UpdatePost)} returned null object.");
+            Assert.IsNull(result.Result, $"{nameof(PostsController.UpdatePost)} returned an action result instead of an object result.");
+            Assert.IsNotNull(result.Value, $"{nameof(PostsController.UpdatePost)} returned a null as an object result.");
+            Assert.AreEqual(result.Value, post, $"{nameof(PostsController.UpdatePost)} retuned an unexpected value object.");
+            _repositoryMock.Verify();
+        }
+
+        [TestMethod]
+        public async Task DeletePost_Success()
+        {
+            //  Arrange
+            Post post = new Post
+            {
+                PostId = 1,
+                Title = "Hello, World!",
+            };
+
+            _repositoryMock.Setup(repo => repo.DeletePostAsync(post.PostId))
+                .ReturnsAsync(post)
+                .Verifiable();
+
+            PostsController controller = new(_repositoryMock.Object);
+
+            //  Act
+            ActionResult<Post> result = await controller.DeletePost(post.PostId);
+
+            //  Assert
+            Assert.IsNotNull(result, $"{nameof(PostsController.DeletePost)} returned null object.");
+            Assert.IsNull(result.Result, $"{nameof(PostsController.DeletePost)} returned an action result instead of an object result.");
+            Assert.IsNotNull(result.Value, $"{nameof(PostsController.DeletePost)} returned a null as an object result.");
+            Assert.AreEqual(result.Value, post, $"{nameof(PostsController.DeletePost)} retuned an unexpected value object.");
+        }
     }
 }
