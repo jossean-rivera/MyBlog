@@ -1,35 +1,35 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { AuthenticatedTemplate } from "@azure/msal-react"
 import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
 import Toast from 'react-bootstrap/Toast'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+    getErrorMessage, getPosts, getLoading,
+    setErrorMessage, setSelectedPostID, loadPosts
+} from "../state/postsSlice"
 
-export default function PostList() {
-    const [posts, setPosts] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
+export default function PostList({ history }) {
 
+    //  Get function to dispatch actions
+    const dispatch = useDispatch()
 
-    async function OnLoadPosts() {
-        setLoading(true)
-        try {
-            const response = await fetch('/api/posts')
-            const json = await response.json()
-            setPosts(json)
-            setLoading(false)
-        }
-        catch {
-            setError('There was an error while trying to get post. Try again.')
-            setLoading(false)
-        }
+    //  Query the store
+    const error = useSelector(getErrorMessage)
+    const posts = useSelector(getPosts)
+    const loading = useSelector(getLoading)
+
+    const onViewClick = postId => {
+        dispatch(setSelectedPostID(postId))
+        history.push(`/posts/${postId}`)
     }
 
     return (
         <>
             {error &&
                 <div className="mb-3">
-                    <Toast show={error} onClose={() => setError('')}>
+                    <Toast show={error} onClose={() => setErrorMessage('')}>
                         <Toast.Header>
                             <strong>Error</strong>
                         </Toast.Header>
@@ -37,17 +37,14 @@ export default function PostList() {
                     </Toast>
                 </div>
             }
-
             {posts?.map(post => (
                 <div className="mb-4" key={post.postId}>
                     <h2>{post.title}</h2>
                     <h5>{post.subTitle}</h5>
-                    <Link to={`posts/${post.postId}`}>
-                        <Button variant="primary" size="sm">View</Button>
-                    </Link>
+                    <Button variant="primary" size="sm" onClick={() => onViewClick(post.postId)}>View</Button>
                 </div>
             ))}
-            <Button variant="primary" onClick={OnLoadPosts} disabled={loading}>
+            <Button variant="primary" onClick={() => dispatch(loadPosts())} disabled={loading}>
                 {loading && <Spinner style={{ marginRight: '5px' }} animation="border" role="status" size="sm" />}
                 Load Posts
             </Button>
