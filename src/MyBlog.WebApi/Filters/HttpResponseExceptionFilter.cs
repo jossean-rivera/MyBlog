@@ -29,7 +29,7 @@ namespace MyBlog.WebApi.Filters
             }
             else
             {
-                object result = _env.IsDevelopment() ? context.Exception : "Something went wrong. Try Again.";
+                string result = _env.IsDevelopment() ? context.Exception.Message : "Something went wrong. Try Again.";
                 context.Result = new ObjectResult(result)
                 {
                     StatusCode = StatusCodes.Status500InternalServerError
