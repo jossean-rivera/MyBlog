@@ -4,7 +4,7 @@ My personal blog web application using [React.js](https://reactjs.org/) for fron
 # How to run
 TBD
 
-### `appsettings.jsom`/`secrets.json` File Template
+### `appsettings.json`/`secrets.json` File Template
 
 ```json
 {
