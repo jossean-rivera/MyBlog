@@ -22,6 +22,7 @@ namespace MyBlog.WebApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //  Add and setup DbContext
             string cs = Configuration.GetConnectionString("MyBlogConnection");
             services.AddDbContext<MyBlogDbContext>(options => options.UseSqlite(cs));
 
@@ -45,6 +46,9 @@ namespace MyBlog.WebApi
             {
                 options.Filters.Add<HttpResponseExceptionFilter>();
             });
+
+            // Register the Swagger generator
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +57,16 @@ namespace MyBlog.WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                // Enable middleware to serve generated Swagger as a JSON endpoint.
+                app.UseSwagger();
+
+                // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+                // specifying the Swagger JSON endpoint.
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Blog V1");
+                });
             }
 
             app.UseRouting();
