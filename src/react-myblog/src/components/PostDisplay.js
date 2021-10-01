@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
-import { AuthenticatedTemplate } from "@azure/msal-react"
+import { AuthenticatedTemplate } from '@azure/msal-react'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import { useSelector, useDispatch } from 'react-redux'
-import { getSelectedPostID, getSelectedPost, getErrorMessage, getLoading, loadPostsAsync } from "../state/postsSlice"
+import {
+    getSelectedPostID, getSelectedPost, getErrorMessage,
+    loadPostsAsync, getStatus
+} from '../state/postsSlice'
+import Status from '../enums/postsEffectStatus'
 
 export default function PostDisplay() {
     const { postId } = useParams()
@@ -16,9 +20,15 @@ export default function PostDisplay() {
     //  Query the store
     const selectedPostID = useSelector(getSelectedPostID);
     const error = useSelector(getErrorMessage)
-    const loading = useSelector(getLoading)
     const post = useSelector(getSelectedPost(selectedPostID || postId))
+    const status = useSelector(getStatus)
+    const loading = status === Status.LOADING
 
+
+    useEffect(() => {
+        //  Ensure the store has the loaded posts
+        dispatch(loadPostsAsync())
+    }, [dispatch, postId])
 
     if (loading) {
         return <Spinner animation="border" />
@@ -27,9 +37,6 @@ export default function PostDisplay() {
     if (error) {
         return <h5 className="text-error">{error}</h5>
     }
-
-    //  Ensure the store has the loaded posts
-    dispatch(loadPostsAsync())
 
     return (
         <div>
