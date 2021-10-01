@@ -3,6 +3,7 @@ using MyBlog.Models;
 using MyBlog.Models.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyBlog.Data
@@ -43,7 +44,7 @@ namespace MyBlog.Data
         public async Task<Post> GetPostAsync(int id) => await _context.Posts!.FindAsync(id);
 
         /// <inheritdoc />
-        public async Task<IEnumerable<Post>> GetPostsAsync() => await _context.Posts.ToArrayAsync();
+        public async Task<IEnumerable<Post>> GetPostsAsync() => await _context.Posts!.Where(post => post.Visible).ToArrayAsync();
 
         /// <inheritdoc />
         public async Task<Post> UpdatePostAsync(Post post)

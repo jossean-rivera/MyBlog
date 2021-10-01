@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using MyBlog.Data;
 using MyBlog.Models;
+using MyBlog.WebApi.Filters;
 using MyBlog.WebApi.Routes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,11 +18,15 @@ namespace MyBlog.WebApi.Controllers
     [ApiRoute]
     [ApiController]
     [ApiVersion("1.0")]
+    [MinResponseTime(3_000)]
     public class PostsController : ControllerBase
     {
         private const string PostScope = "Posts.ReadWrite";
         private readonly IPostRepository _repository;
 
+        /// <summary>
+        /// Default constructor used by DI
+        /// </summary>
         public PostsController(IPostRepository repository) => _repository = repository;
 
         /// <summary>
@@ -29,7 +34,7 @@ namespace MyBlog.WebApi.Controllers
         /// </summary>
         /// <returns>Task that yields enumeration of <see cref="Post"/> objects</returns>
         [HttpGet]
-        [ResponseCache(Duration = 3600)]
+        //[ResponseCache(Duration = 3600)]
         public async Task<IEnumerable<Post>> GetPosts() => await _repository.GetPostsAsync();
 
         /// <summary>
@@ -38,7 +43,7 @@ namespace MyBlog.WebApi.Controllers
         /// <param name="id">Identifier of post</param>
         /// <returns>Task that yields single instance of <see cref="Post"/></returns>
         [HttpGet("{id}")]
-        [ResponseCache(Duration = 3600)]
+        //[ResponseCache(Duration = 3600)]
         public async Task<ActionResult<Post>> GetPost([Required, FromRoute] int id)
         {
             Post post = await _repository.GetPostAsync(id);
@@ -68,7 +73,9 @@ namespace MyBlog.WebApi.Controllers
         {
             if (User.Identity!.IsAuthenticated)
             {
-                post.CreatedBy = User.FindFirst(ClaimTypes.Email)?.Value ?? "unknown";
+                post.CreatedBy = User.FindFirstValue(ClaimTypes.Email) ?? 
+                    User.FindFirstValue(ClaimTypes.Upn) ??
+                    "unknown";
             }
 
             Post newPost = await _repository.AddPostAsync(post);
