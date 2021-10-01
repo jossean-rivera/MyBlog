@@ -101,8 +101,9 @@ export const savePostAsync = (fetchAction, post) => async dispatch => {
     dispatch(setStatus(Status.SUBMITTING))
 
     try {
+        const method = post.postId ? 'PUT' : 'POST'
         const url = getPostsUrl()
-        const savedPost = await fetchAction('PUT', url, post)
+        const savedPost = await fetchAction(method, url, post)
         dispatch(savePostSuccess(savedPost))
     } catch (error) {
         let message = 'There was an error while trying to update the posts. Please, try again.'
