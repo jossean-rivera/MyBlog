@@ -6,9 +6,10 @@ import Spinner from 'react-bootstrap/Spinner'
 import Toast from 'react-bootstrap/Toast'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-    getErrorMessage, getPosts, getLoading,
+    getErrorMessage, getPosts, getStatus,
     setErrorMessage, setSelectedPostID, loadPostsAsync
 } from "../state/postsSlice"
+import Status from '../enums/postsEffectStatus'
 
 export default function PostList({ history }) {
 
@@ -18,7 +19,8 @@ export default function PostList({ history }) {
     //  Query the store
     const error = useSelector(getErrorMessage)
     const posts = useSelector(getPosts)
-    const loading = useSelector(getLoading)
+    const status = useSelector(getStatus)
+    const loading = status === Status.LOADING
 
     const onViewClick = postId => {
         dispatch(setSelectedPostID(postId))

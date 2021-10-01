@@ -9,20 +9,17 @@ export const postsSlice = createSlice({
         list: [],
         selectedPostID: 0,
         errorMessage: '',
-        loading: false,
         status: Status.INITIAL
     },
     reducers: {
         loadPostsSuccess: (state, action) => {
             state.list = action.payload || []
             state.errorMessage = ''
-            state.loading = false
             state.status = Status.LOADED
         },
         loadPostsFailure: (state, action) => {
             state.list = []
             state.errorMessage = action.payload || 'Failed to load posts'
-            state.loading = false
             state.status = Status.FAILED
         },
         savePostSuccess: (state, action) => {
@@ -34,12 +31,10 @@ export const postsSlice = createSlice({
                 state.list.push(newPost)
             }
             state.errorMessage = ''
-            state.loading = false
             state.status = Status.SAVED
         },
         savePostFailure: (state, action) => {
             state.errorMessage = action.payload || 'Failed to load posts'
-            state.loading = false
             state.status = Status.FAILED
         },
         updatePost: (state, action) => {
@@ -55,9 +50,6 @@ export const postsSlice = createSlice({
         setErrorMessage: (state, action) => {
             state.errorMessage = action.payload
         },
-        setLoading: (state, action) => {
-            state.loading = action.payload
-        },
         setStatus: (state, action) => {
             state.status = action.payload
         }
@@ -70,7 +62,6 @@ export const {
     setErrorMessage,
     loadPostsSuccess,
     loadPostsFailure,
-    setLoading,
     savePostSuccess,
     savePostFailure,
     updatePost,
@@ -80,7 +71,6 @@ export const {
 //  Selectors
 export const getPosts = state => state.posts.list
 export const getErrorMessage = state => state.posts.errorMessage
-export const getLoading = state => state.posts.loading
 export const getStatus = state => state.posts.status
 export const getSelectedPostID = state => state.posts.selectedPostID
 export const getSelectedPost = id => state => state.posts.list.find(p => p.postId == id)
@@ -93,7 +83,7 @@ export const loadPostsAsync = () => async (dispatch, getState) => {
     const state = getState()
     if (!state.posts.list?.length && state.posts.status !== Status.LOADED) {
 
-        dispatch(setLoading(true))
+        dispatch(setStatus(Status.LOADING))
 
         try {
             const response = await fetch('/api/posts')
@@ -108,7 +98,6 @@ export const loadPostsAsync = () => async (dispatch, getState) => {
 
 export const savePostAsync = (fetchAction, post) => async dispatch => {
 
-    dispatch(setLoading(true))
     dispatch(setStatus(Status.SUBMITTING))
 
     try {
