@@ -7,7 +7,7 @@ import Toast from 'react-bootstrap/Toast'
 import { useSelector, useDispatch } from 'react-redux'
 import {
     getErrorMessage, getPosts, getLoading,
-    setErrorMessage, setSelectedPostID, loadPosts
+    setErrorMessage, setSelectedPostID, loadPostsAsync
 } from "../state/postsSlice"
 
 export default function PostList({ history }) {
@@ -44,7 +44,7 @@ export default function PostList({ history }) {
                     <Button variant="primary" size="sm" onClick={() => onViewClick(post.postId)}>View</Button>
                 </div>
             ))}
-            <Button variant="primary" onClick={() => dispatch(loadPosts())} disabled={loading}>
+            <Button variant="primary" onClick={() => dispatch(loadPostsAsync())} disabled={loading}>
                 {loading && <Spinner style={{ marginRight: '5px' }} animation="border" role="status" size="sm" />}
                 Load Posts
             </Button>

@@ -5,7 +5,7 @@ import { AuthenticatedTemplate } from "@azure/msal-react"
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import { useSelector, useDispatch } from 'react-redux'
-import { getSelectedPostID, getSelectedPost, getErrorMessage, getLoading, loadPosts } from "../state/postsSlice"
+import { getSelectedPostID, getSelectedPost, getErrorMessage, getLoading, loadPostsAsync } from "../state/postsSlice"
 
 export default function PostDisplay() {
     const { postId } = useParams()
@@ -29,7 +29,7 @@ export default function PostDisplay() {
     }
 
     //  Ensure the store has the loaded posts
-    dispatch(loadPosts())
+    dispatch(loadPostsAsync())
 
     return (
         <div>
