@@ -18,11 +18,15 @@ namespace MyBlog.WebApi.Controllers
     [ApiRoute]
     [ApiController]
     [ApiVersion("1.0")]
+    [MinResponseTime(3_000)]
     public class PostsController : ControllerBase
     {
         private const string PostScope = "Posts.ReadWrite";
         private readonly IPostRepository _repository;
 
+        /// <summary>
+        /// Default constructor used by DI
+        /// </summary>
         public PostsController(IPostRepository repository) => _repository = repository;
 
         /// <summary>
@@ -69,7 +73,9 @@ namespace MyBlog.WebApi.Controllers
         {
             if (User.Identity!.IsAuthenticated)
             {
-                post.CreatedBy = User.FindFirst(ClaimTypes.Email)?.Value ?? "unknown";
+                post.CreatedBy = User.FindFirstValue(ClaimTypes.Email) ?? 
+                    User.FindFirstValue(ClaimTypes.Upn) ??
+                    "unknown";
             }
 
             Post newPost = await _repository.AddPostAsync(post);

@@ -44,7 +44,7 @@ namespace MyBlog.Data
             throw new NotFoundHttpResponseException($"Cannot find post with ID equal to {id}"));
 
         /// <inheritdoc />
-        public Task<IEnumerable<Post>> GetPostsAsync() => Task.FromResult(_posts as IEnumerable<Post>);
+        public Task<IEnumerable<Post>> GetPostsAsync() => Task.FromResult(_posts.Where(post => post.Visible));
 
         /// <inheritdoc />
         public Task<Post> AddPostAsync(Post post)

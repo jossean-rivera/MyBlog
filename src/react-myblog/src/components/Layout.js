@@ -36,7 +36,7 @@ export default function Layout({ children }) {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <Container className="py-5" style={{ minHeight: '74vh'}}>
+            <Container className="py-5" style={{ minHeight: 'calc(100vh - 176px)'}}>
                 {children}
             </Container>
             <div className="p-5 bg-dark text-white">
