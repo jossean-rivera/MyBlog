@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using MyBlog.Data;
 using MyBlog.Models;
+using MyBlog.WebApi.Filters;
 using MyBlog.WebApi.Routes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,7 +30,7 @@ namespace MyBlog.WebApi.Controllers
         /// </summary>
         /// <returns>Task that yields enumeration of <see cref="Post"/> objects</returns>
         [HttpGet]
-        [ResponseCache(Duration = 3600)]
+        [NonDevResponseCache(Duration = 3600)]
         public async Task<IEnumerable<Post>> GetPosts() => await _repository.GetPostsAsync();
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace MyBlog.WebApi.Controllers
         /// <param name="id">Identifier of post</param>
         /// <returns>Task that yields single instance of <see cref="Post"/></returns>
         [HttpGet("{id}")]
-        [ResponseCache(Duration = 3600)]
+        [NonDevResponseCache(Duration = 3600)]
         public async Task<ActionResult<Post>> GetPost([Required, FromRoute] int id)
         {
             Post post = await _repository.GetPostAsync(id);
