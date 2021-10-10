@@ -8,7 +8,7 @@ import Alert from 'react-bootstrap/Alert'
 import { useSelector, useDispatch } from 'react-redux'
 import {
     getSelectedPost, getErrorMessage, loadPostsAsync,
-    savePostAsync, setSelectedPostID, updatePost, getStatus, setStatus
+    savePostAsync, setSelectedPostID, updatePost, getStatus
 } from '../state/postsSlice'
 import Status from '../enums/postsEffectStatus'
 import { Link } from 'react-router-dom'
@@ -52,6 +52,7 @@ export default function EditPost() {
         }, timingInterval)
 
         return () => clearTimeout(timeout)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [post])
 
     //  If component hasn't fetch post, display spinner

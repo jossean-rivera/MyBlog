@@ -23,13 +23,15 @@ export const postsSlice = createSlice({
             state.status = Status.FAILED
         },
         savePostSuccess: (state, action) => {
-            const newPost = action.payload
-            const prevPostIndex = state.list.findIndex(p => p.postId === newPost.postId)
+            const newPost = action.payload.savedPost
+            const prevId = action.payload.prevId
+            const prevPostIndex = state.list.findIndex(p => p.postId === prevId) 
             if (prevPostIndex >= 0) {
                 state.list.splice(prevPostIndex, 1, newPost)
             } else {
                 state.list.push(newPost)
             }
+            state.selectedPostID = newPost.postId
             state.errorMessage = ''
             state.status = Status.SAVED
         },
@@ -42,6 +44,13 @@ export const postsSlice = createSlice({
             const prevPostIndex = state.list.findIndex(p => p.postId === newPost.postId)
             if (prevPostIndex >= 0) {
                 state.list.splice(prevPostIndex, 1, newPost)
+            }
+        },
+        addPost: (state, action) => {
+            const newPost = action.payload
+            if (newPost) {
+                state.selectedPostID = newPost.postId
+                state.list.push(newPost)
             }
         },
         setSelectedPostID: (state, action) => {
@@ -66,6 +75,7 @@ export const {
     savePostFailure,
     updatePost,
     setStatus,
+    addPost,
 } = postsSlice.actions
 
 //  Selectors
@@ -73,7 +83,7 @@ export const getPosts = state => state.posts.list
 export const getErrorMessage = state => state.posts.errorMessage
 export const getStatus = state => state.posts.status
 export const getSelectedPostID = state => state.posts.selectedPostID
-export const getSelectedPost = id => state => state.posts.list.find(p => p.postId == id)
+export const getSelectedPost = id => state => state.posts.list.find(p => p.postId == (id || state.posts.selectedPostID))
 
 //  Reducers
 export default postsSlice.reducer
@@ -104,7 +114,7 @@ export const savePostAsync = (fetchAction, post) => async dispatch => {
         const method = post.postId ? 'PUT' : 'POST'
         const url = getPostsUrl()
         const savedPost = await fetchAction(method, url, post)
-        dispatch(savePostSuccess(savedPost))
+        dispatch(savePostSuccess({ savedPost, prevId: post.postId }))
     } catch (error) {
         let message = 'There was an error while trying to update the posts. Please, try again.'
 
