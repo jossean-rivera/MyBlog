@@ -1,0 +1,80 @@
+@import "../../scss/variables";
+
+$header-height: 75px;
+$header-links-side-margin: 15px;
+
+header {
+    border-bottom: 1px solid rgba(0,0,0,.15);
+}
+
+header .container {
+    position: relative;
+    min-height: $header-height;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+nav {
+    position: relative;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+nav:first-child {
+    justify-content: flex-start;
+}
+
+nav:last-child {
+    justify-content: flex-end;
+}
+
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+nav:first-child ul li {
+    margin-right: $header-links-side-margin;
+}
+
+nav:last-child ul li {
+    margin-left: $header-links-side-margin;
+}
+
+nav:last-child ul li:last-child {
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav:last-child ul li input {
+    width: 50%;
+    transition: 250ms ease-in-out;
+}
+
+nav:last-child ul li input.expanded {
+    width: 100%;
+}
+
+.brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 1.5em;
+}
+
+.period {
+    color: $primary;
+}

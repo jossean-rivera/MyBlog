@@ -1,7 +1,12 @@
+@import "./variables";
+@import "~bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif&display=swap");
 
-@import './variables';
-@import '~bootstrap/scss/bootstrap';
+* {
+    font-family: "PT Serif", serif;
+}
 
 a {
     text-decoration: none;
+    color: inherit;
 }
