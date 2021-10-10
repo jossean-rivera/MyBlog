@@ -62,7 +62,7 @@ namespace MyBlog.WebApi.Filters
             IServiceProvider services = context.HttpContext.RequestServices;
             IWebHostEnvironment env = services.GetRequiredService<IWebHostEnvironment>();
 
-            if (env.IsDevelopment())
+            if (!env.IsDevelopment())
             {
                 //  Create a response cache attribute 
                 ResponseCacheAttribute cacheAttr = new()
