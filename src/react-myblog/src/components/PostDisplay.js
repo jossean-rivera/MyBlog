@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
 import { AuthenticatedTemplate } from '@azure/msal-react'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
@@ -42,16 +43,20 @@ export default function PostDisplay() {
         <div>
             <h1>{post?.title || 'No Title'}</h1>
             <h5><i>{post?.subTitle || 'No Sub Title'}</i></h5>
-            <p>{post?.content}</p>
+            <ReactMarkdown children={post?.content || ''} />
             <AuthenticatedTemplate>
-                <Link to={`/posts/${post?.postId}/edit`}>
-                    <Button variant="primary" size="sm">Edit</Button>
-                </Link>
-                <Link to={`/posts/${post?.postId}/delete`}>
-                    <Button className="mx-3 text-white" variant="danger" size="sm">Delete</Button>
-                </Link>
+                <div className="pb-3">
+                    <Link to={`/posts/${post?.postId}/edit`}>
+                        <Button variant="primary" size="sm">Edit</Button>
+                    </Link>
+                    <Link to={`/posts/${post?.postId}/delete`}>
+                        <Button className="mx-3 text-white" variant="danger" size="sm">Delete</Button>
+                    </Link>
+                </div>
             </AuthenticatedTemplate>
-            <Link to="/"><span className="text-dark">&#60; Back</span></Link>
+            <div>
+                <Link to="/"><span className="text-dark">&#60; Back</span></Link>
+            </div>
         </div>
     )
 }
