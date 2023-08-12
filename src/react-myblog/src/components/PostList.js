@@ -31,7 +31,7 @@ export default function PostList({ history }) {
         <>
             {error &&
                 <div className="mb-3">
-                    <Toast show={error} onClose={() => setErrorMessage('')}>
+                    <Toast show={error} onClose={() => dispatch(setErrorMessage(''))}>
                         <Toast.Header>
                             <strong>Error</strong>
                         </Toast.Header>

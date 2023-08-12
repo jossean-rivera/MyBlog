@@ -30,7 +30,7 @@ export default function Header() {
                         </li>
                         <li>
                             <Link to="/about">
-                                About
+                                About Me
                             </Link>
                         </li>
                     </ul>
