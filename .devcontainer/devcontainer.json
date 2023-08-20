@@ -1,6 +1,8 @@
 {
   // Name for the dev container displayed in the UI
   "name": "MyBlog Default Dev Container",
+  // Base image meant to serve as a starting point for creating development container images for various programming languages and tools
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
     "ghcr.io/devcontainers/features/dotnet:1": {
