@@ -1,47 +1,52 @@
 {
-    // Name for the dev container displayed in the UI
-    "name": "MyBlog Default Dev Container",
-
-    // Features to add to the dev container. More info: https://containers.dev/features.
-    "features": {
-        "ghcr.io/devcontainers/features/dotnet:1": {
-            "version": "latest"
-        },
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "latest"
-        },
-        "ghcr.io/devcontainers/features/git:1": {
-            "version": "latest",
-            "ppa": "false"
-        },
-        "ghcr.io/devcontainers/features/git-lfs:1": {
-            "version": "latest"
-        }
+  // Name for the dev container displayed in the UI
+  "name": "MyBlog Default Dev Container",
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:1": {
+      "version": "latest"
     },
-    // Configure tool-specific properties.
-    "customizations": {
-        // Configure properties specific to VS Code.
-        "vscode": {
-            // Add the IDs of extensions you want installed when the container is created.
-            "extensions": [
-                "ms-dotnettools.csharp",
-                "yzhang.markdown-all-in-one",
-                "sibiraj-s.vscode-scss-formatter",
-                "dbaeumer.vscode-eslint"
-            ]
-        }
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "latest"
     },
-
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": [
-        "export ASPNETCORE_ENVIRONMENT=Development",
-        "dotnet user-secrets set ConnectionStrings:MYBLOG_SQLITE ${CONNSTR_MYBLOG_SQLITE_LOCAL} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
-        "dotnet user-secrets set AzureAd:Instance https://login.microsoftonline.com/ --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
-        "dotnet user-secrets set AzureAd:ClientId ${AZURE_AD_CLIENT_ID} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
-        "dotnet user-secrets set AzureAd:TenantId ${AZURE_AD_TENANT_ID} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
-        "echo REACT_APP_SERVER_URL=http://localhost:5000 > ./src/react-myblog/.env.development",
-        "echo REACT_APP_REDIRECT_URL=http://localhost:3000 >> ./src/react-myblog/.env.development",
-        "echo REACT_APP_CLIENT_ID=${AZURE_AD_CLIENT_ID} >> ./src/react-myblog/.env.development",
-        "echo REACT_APP_TENANT_ID=${AZURE_AD_TENANT_ID} >> ./src/react-myblog/.env.development",
-    ]
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": "false"
+    },
+    "ghcr.io/devcontainers/features/git-lfs:1": {
+      "version": "latest"
+    }
+  },
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "yzhang.markdown-all-in-one",
+        "sibiraj-s.vscode-scss-formatter",
+        "dbaeumer.vscode-eslint",
+        "adrianwilczynski.user-secrets",
+        "dsznajder.es7-react-js-snippets"
+      ]
+    }
+  },
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": [
+    "export ASPNETCORE_ENVIRONMENT=Development",
+    "dotnet user-secrets set ConnectionStrings:MYBLOG_SQLITE ${CONNSTR_MYBLOG_SQLITE_LOCAL} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
+    "dotnet user-secrets set AzureAd:Instance https://login.microsoftonline.com/ --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
+    "dotnet user-secrets set AzureAd:ClientId ${AZURE_AD_CLIENT_ID} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
+    "dotnet user-secrets set AzureAd:TenantId ${AZURE_AD_TENANT_ID} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
+    "echo REACT_APP_SERVER_URL=http://localhost:5000 > ./src/react-myblog/.env.development",
+    "echo REACT_APP_REDIRECT_URL=http://localhost:3000 >> ./src/react-myblog/.env.development",
+    "echo REACT_APP_CLIENT_ID=${AZURE_AD_CLIENT_ID} >> ./src/react-myblog/.env.development",
+    "echo REACT_APP_TENANT_ID=${AZURE_AD_TENANT_ID} >> ./src/react-myblog/.env.development",
+  ],
+  // Ensure that the commands run within the container use the same UID and GID as the "vscode" user on the host system.
+  // This helps align the permissions and ownership of files created or accessed within the container with the user on the host system.
+  "remoteUser": "vscode",
+  // Specify a list of ports that should be forwarded from the Dev Container to the local machine
+  "forwardPorts": [3000, 5000,5001]
 }
