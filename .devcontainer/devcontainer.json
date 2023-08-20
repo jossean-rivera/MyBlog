@@ -41,7 +41,7 @@
     "echo REACT_APP_SERVER_URL=http://localhost:5000 > ./src/react-myblog/.env.development",
     "echo REACT_APP_REDIRECT_URL=http://localhost:3000 >> ./src/react-myblog/.env.development",
     "echo REACT_APP_CLIENT_ID=${AZURE_AD_CLIENT_ID} >> ./src/react-myblog/.env.development",
-    "echo REACT_APP_TENANT_ID=${AZURE_AD_TENANT_ID} >> ./src/react-myblog/.env.development",
+    "echo REACT_APP_TENANT_ID=${AZURE_AD_TENANT_ID} >> ./src/react-myblog/.env.development"
   ],
   // Ensure that the commands run within the container use the same UID and GID as the "vscode" user on the host system.
   // This helps align the permissions and ownership of files created or accessed within the container with the user on the host system.
