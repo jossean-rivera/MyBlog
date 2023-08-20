@@ -34,8 +34,8 @@
       ]
     }
   },
-  // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": [
+  // Use 'postStartCommand' to run commands after the container is started.
+  "postStartCommand": [
     "export ASPNETCORE_ENVIRONMENT=Development",
     "dotnet user-secrets set ConnectionStrings:MYBLOG_SQLITE ${CONNSTR_MYBLOG_SQLITE_LOCAL} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
     "dotnet user-secrets set AzureAd:Instance https://login.microsoftonline.com/ --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
