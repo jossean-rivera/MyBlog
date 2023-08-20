@@ -45,9 +45,9 @@
     "echo REACT_APP_CLIENT_ID=${AZURE_AD_CLIENT_ID} >> ./src/react-myblog/.env.development",
     "echo REACT_APP_TENANT_ID=${AZURE_AD_TENANT_ID} >> ./src/react-myblog/.env.development"
   ],
-  // Ensure that the commands run within the container use the same UID and GID as the "vscode" user on the host system.
-  // This helps align the permissions and ownership of files created or accessed within the container with the user on the host system.
-  "remoteUser": "vscode",
+  // This ensures that the commands you run within the container execute with the correct permissions, and the file ownership and permissions align with the "codespace" user
+  "remoteUser": "codespace",
+  "containerUser": "codespace",
   // Specify a list of ports that should be forwarded from the Dev Container to the local machine
   "forwardPorts": [3000, 5000,5001]
 }
