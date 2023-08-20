@@ -23,7 +23,7 @@ namespace MyBlog.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             //  Add and setup DbContext
-            string cs = Configuration.GetConnectionString("MyBlogConnection");
+            string cs = Configuration.GetConnectionString("MYBLOG_SQLITE");
             services.AddDbContext<MyBlogDbContext>(options => options.UseSqlite(cs));
 
             //  Register posts repository

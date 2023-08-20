@@ -9,7 +9,7 @@ TBD
 ```json
 {
   "ConnectionStrings": {
-    "MyBlogConnection": "Data Source=C:\\BlogDB.db;"
+    "MYBLOG_SQLITE": "Data Source=C:\\BlogDB.db;"
   },
   "AzureAd": {
     "Instance": "https://login.microsoftonline.com/",
