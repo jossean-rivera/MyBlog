@@ -11,6 +11,8 @@ import {
     loadPostsAsync, getStatus
 } from '../state/postsSlice'
 import Status from '../enums/postsEffectStatus'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 export default function PostDisplay() {
     const { postId } = useParams()
@@ -55,7 +57,11 @@ export default function PostDisplay() {
                 </div>
             </AuthenticatedTemplate>
             <div>
-                <Link to="/"><span className="text-dark">&#60; Back</span></Link>
+                <Link to="/" className="text-dark">
+                    <FontAwesomeIcon icon={icon({ name: 'arrow-left' })} />
+                    &nbsp;
+                    Back
+                </Link>
             </div>
         </div>
     )
