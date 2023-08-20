@@ -44,10 +44,10 @@
     "echo REACT_APP_REDIRECT_URL=http://localhost:3000 >> ./src/react-myblog/.env.development",
     "echo REACT_APP_CLIENT_ID=${AZURE_AD_CLIENT_ID} >> ./src/react-myblog/.env.development",
     "echo REACT_APP_TENANT_ID=${AZURE_AD_TENANT_ID} >> ./src/react-myblog/.env.development"
-  ],
+  ]
   // This ensures that the commands you run within the container execute with the correct permissions, and the file ownership and permissions align with the "codespace" user
-  "remoteUser": "codespace",
-  "containerUser": "codespace",
+  //"remoteUser": "codespace",
+  //"containerUser": "codespace",
   // Specify a list of ports that should be forwarded from the Dev Container to the local machine
-  "forwardPorts": [3000, 5000,5001]
+  //"forwardPorts": [3000, 5000,5001]
 }
