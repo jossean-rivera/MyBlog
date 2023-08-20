@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import PageLayout from './components/layout/PageLayout'
 import PostDisplay from './components/PostDisplay'
@@ -10,8 +10,24 @@ import AdminSignIn from './components/admin/AdminSignIn'
 import AdminPostList from './components/admin/AdminPostList'
 import NotFound from './components/layout/NotFound'
 import About from './components/About'
+import { useSelector } from 'react-redux'
+import { getDarkModeFlag } from './state/themeSlice'
 
 export default function App() {
+
+  const darkMode = useSelector(getDarkModeFlag);
+
+  useEffect(() => {
+    if (darkMode) {
+      if (!document.body.classList.contains('dark-mode')) {
+        document.body.classList.add('dark-mode')
+      }
+    } else if (document.body.classList.contains('dark-mode')) {
+      document.body.classList.remove('dark-mode')
+    }
+
+  }, [darkMode])
+
   return (
     <PageLayout>
       <Switch>

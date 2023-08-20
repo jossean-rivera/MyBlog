@@ -5,15 +5,11 @@ import Container from 'react-bootstrap/Container'
 import './Header.scss'
 
 function onSearchFocus(e) {
-    if (!e.target.classList.contains('expanded')) {
-        e.target.classList.add('expanded')
-    }
+    e.target.classList.toggle('expanded')
 }
 
 function onSearchBlur(e) {
-    if (e.target.classList.contains('expanded')) {
-        e.target.classList.remove('expanded')
-    }
+    e.target.classList.toggle('expanded')
 }
 
 export default function Header() {

@@ -6,6 +6,16 @@
     font-family: "PT Serif", serif;
 }
 
+body {
+    color: $dark;
+    background-color: $white;
+}
+
+body.dark-mode {
+    color: $white;
+    background-color: $dark;
+}
+
 a {
     text-decoration: none;
     color: inherit;
