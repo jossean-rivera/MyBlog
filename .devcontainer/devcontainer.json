@@ -29,7 +29,8 @@
         "yzhang.markdown-all-in-one",
         "sibiraj-s.vscode-scss-formatter",
         "dbaeumer.vscode-eslint",
-        "dsznajder.es7-react-js-snippets"
+        "dsznajder.es7-react-js-snippets",
+        "adrianwilczynski.user-secrets"
       ]
     }
   },
