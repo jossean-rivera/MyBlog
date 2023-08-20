@@ -7,6 +7,10 @@ header {
     border-bottom: 1px solid rgba(0,0,0,.15);
 }
 
+.dark-mode header {
+    border-bottom: 1px solid $gray-600;
+}
+
 header .container {
     position: relative;
     min-height: $header-height;
@@ -78,6 +82,10 @@ nav:last-child ul li input.expanded {
 
 .period {
     color: $primary;
+}
+
+.dark-mode .period {
+    color: $gray-500;
 }
 
 .nav-search ul {
