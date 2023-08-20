@@ -1,0 +1,18 @@
+.card-meta {
+    display: -webkit-box;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem 1.5rem;
+}
+
+.card-meta-divider {
+    width: 100%;
+    margin: 0 0 1.5rem;
+}
+
+.card-body {
+    padding: 2rem !important;
+}

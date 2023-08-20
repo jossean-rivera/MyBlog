@@ -7,9 +7,10 @@ import Toast from 'react-bootstrap/Toast'
 import { useSelector, useDispatch } from 'react-redux'
 import {
     getErrorMessage, getPosts, getStatus,
-    setErrorMessage, setSelectedPostID, loadPostsAsync
+    setErrorMessage, loadPostsAsync
 } from "../state/postsSlice"
 import Status from '../enums/postsEffectStatus'
+import PostPreviewCard from './PostPreviewCard'
 
 export default function PostList({ history }) {
 
@@ -21,11 +22,6 @@ export default function PostList({ history }) {
     const posts = useSelector(getPosts)
     const status = useSelector(getStatus)
     const loading = status === Status.LOADING
-
-    const onViewClick = postId => {
-        dispatch(setSelectedPostID(postId))
-        history.push(`/posts/${postId}`)
-    }
 
     return (
         <>
@@ -39,13 +35,7 @@ export default function PostList({ history }) {
                     </Toast>
                 </div>
             }
-            {posts?.map(post => (
-                <div className="mb-4" key={post.postId}>
-                    <h2>{post.title}</h2>
-                    <h5>{post.subTitle}</h5>
-                    <Button variant="primary" size="sm" onClick={() => onViewClick(post.postId)}>View</Button>
-                </div>
-            ))}
+            {posts?.map(post => <PostPreviewCard key={post.postId} post={post} history={history} />)}
             <Button variant="primary" onClick={() => dispatch(loadPostsAsync())} disabled={loading}>
                 {loading && <Spinner style={{ marginRight: '5px' }} animation="border" role="status" size="sm" />}
                 Load Posts
