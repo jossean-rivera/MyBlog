@@ -13,6 +13,7 @@ import {
 import Status from '../enums/postsEffectStatus'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+import './PostDisplay.scss'
 
 export default function PostDisplay() {
     const { postId } = useParams()
@@ -57,7 +58,7 @@ export default function PostDisplay() {
                 </div>
             </AuthenticatedTemplate>
             <div>
-                <Link to="/" className="text-dark">
+                <Link to="/">
                     <FontAwesomeIcon icon={icon({ name: 'arrow-left' })} />
                     &nbsp;
                     Back

@@ -1,0 +1,13 @@
+@import "../scss/variables";
+
+a {
+    color: $dark;
+}
+
+.dark-mode a {
+    color: $white;
+}
+
+.dark-mode a:hover {
+    color: $gray-200;
+}

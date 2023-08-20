@@ -83,3 +83,8 @@ nav:last-child ul li input.expanded {
 .nav-search ul {
     justify-content: flex-end;
 }
+
+.dark-mode .nav-search .form-control {
+    color: $white;
+    background-color: $dark;
+}
