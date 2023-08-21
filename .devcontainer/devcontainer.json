@@ -34,21 +34,9 @@
       ]
     }
   },
-  // Use 'postStartCommand' to run commands after the container is started.
-  "postStartCommand": [
-    "export ASPNETCORE_ENVIRONMENT=Development",
-    "dotnet user-secrets set ConnectionStrings:MYBLOG_SQLITE ${CONNSTR_MYBLOG_SQLITE_LOCAL} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
-    "dotnet user-secrets set AzureAd:Instance https://login.microsoftonline.com/ --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
-    "dotnet user-secrets set AzureAd:ClientId ${AZURE_AD_CLIENT_ID} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
-    "dotnet user-secrets set AzureAd:TenantId ${AZURE_AD_TENANT_ID} --project ./src/MyBlog.WebApi/MyBlog.WebApi.csproj",
-    "echo REACT_APP_SERVER_URL=http://localhost:5000 > ./src/react-myblog/.env.development",
-    "echo REACT_APP_REDIRECT_URL=http://localhost:3000 >> ./src/react-myblog/.env.development",
-    "echo REACT_APP_CLIENT_ID=${AZURE_AD_CLIENT_ID} >> ./src/react-myblog/.env.development",
-    "echo REACT_APP_TENANT_ID=${AZURE_AD_TENANT_ID} >> ./src/react-myblog/.env.development"
-  ]
   // This ensures that the commands you run within the container execute with the correct permissions, and the file ownership and permissions align with the "codespace" user
   //"remoteUser": "codespace",
   //"containerUser": "codespace",
   // Specify a list of ports that should be forwarded from the Dev Container to the local machine
-  //"forwardPorts": [3000, 5000,5001]
+  "forwardPorts": [3000, 5000,5001]
 }

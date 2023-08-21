@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,14 +24,26 @@ namespace MyBlog.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             //  Add and setup DbContext
-            string cs = Configuration.GetConnectionString("MYBLOG_SQLITE");
+            string cs = Configuration.GetConnectionString("MyBlogConnection") ?? 
+                Configuration.GetConnectionString("MYBLOG_SQLITE");
             services.AddDbContext<MyBlogDbContext>(options => options.UseSqlite(cs));
 
             //  Register posts repository
             services.AddScoped<IPostRepository, PostDbRepository>();
 
             // Adds Microsoft Identity platform (AAD v2.0) support to protect this API
-            services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(
+                    (JwtBearerOptions options) => { }, 
+                    (MicrosoftIdentityOptions options) => 
+                    {
+                        Configuration.GetSection("AzureAd").Bind(options);
+
+                        //  Use environment variables if the AzureAd section doesn't have values.
+                        options.Instance ??= Configuration["AZURE_AD_INSTANCE"];
+                        options.TenantId ??= Configuration["AZURE_AD_TENANT_ID"];
+                        options.ClientId ??= Configuration["AZURE_AD_CLIENT_ID"];
+                    });
 
             //  Add API Versioning
             services.AddApiVersioning(options =>

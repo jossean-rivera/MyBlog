@@ -9,7 +9,7 @@ TBD
 ```json
 {
   "ConnectionStrings": {
-    "MYBLOG_SQLITE": "Data Source=C:\\BlogDB.db;"
+    "MyBlogConnection": "Data Source=C:\\BlogDB.db;"
   },
   "AzureAd": {
     "Instance": "https://login.microsoftonline.com/",
@@ -17,6 +17,15 @@ TBD
     "TenantId": "Enter_tenant_id_here"
   }
 }
+```
+
+Alternatively, the web API can also read the configuration values from environment variables. Use the following variables to set the configuration of the API:
+
+```
+CUSTOMCONNSTR_MYBLOG_SQLITE = Data Source=C:\BlogDB.db;
+AZURE_AD_INSTANCE = https://login.microsoftonline.com/
+AZURE_AD_TENANT_ID = Enter_client_id_here
+AZURE_AD_CLIENT_ID = Enter_tenant_id_here
 ```
 
 ### `.env.development` File Template
